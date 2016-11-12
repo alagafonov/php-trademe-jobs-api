@@ -1,0 +1,24 @@
+<?php namespace Trademe\Entities;
+
+/**
+ * Salary range value object
+ */
+class SalaryRange extends Range
+{
+
+    /**
+     * @param $min
+     * @param $max
+     * @throws InvalidArgumentException
+     */
+    public function __construct($min, $max)
+    {
+        if ($max - $min > 20000) {
+            throw new InvalidArgumentException(
+                'Max salary range cannot exceed minimum amount by more than 20000'
+            );
+        }
+
+        parent::__construct($min, $max);
+    }
+}

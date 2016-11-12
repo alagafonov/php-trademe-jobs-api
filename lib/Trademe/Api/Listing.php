@@ -12,6 +12,6 @@ class Listing extends ApiAbstract
 
     public function validate(array $data)
     {
-        return $this->post('/Selling.json', $data);
+        return $this->post('/Selling/Validate.json', $data);
     }
 }

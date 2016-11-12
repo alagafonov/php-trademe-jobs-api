@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="phpunit.xsd"
+         backupGlobals="false"
+         bootstrap="tests/bootstrap.php"
+         verbose="false">
+    <testsuites>
+        <testsuite name="Trademe">
+            <directory suffix=".php">./tests/Trademe</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./lib/Trademe</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <!--<log type="coverage-html" target="./reports/coverage"/>-->
+        <!--<log type="coverage-clover" target="./reports/clover.xml"/>-->
+    </logging>
+</phpunit>

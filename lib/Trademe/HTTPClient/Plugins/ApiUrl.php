@@ -3,7 +3,6 @@
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 
-
 class ApiUrl implements Plugin
 {
     private $url;
