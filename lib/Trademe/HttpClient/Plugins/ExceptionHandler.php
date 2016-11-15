@@ -29,7 +29,7 @@ class ExceptionHandler implements Plugin
     {
         return $next($request)->then(function (ResponseInterface $response) use ($request) {
             $statusCode = $response->getStatusCode();
-            echo $statusCode.' : '.$response->getBody()->__toString(); exit;
+            //echo $statusCode.' : '.$response->getBody()->__toString(); exit;
             if ($statusCode < 400 || $statusCode > 600) {
                 return $response;
             } elseif ($statusCode == 404) {

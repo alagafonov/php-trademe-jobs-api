@@ -1,6 +1,7 @@
 <?php namespace Trademe\Entities;
 
 use Trademe\Enums\ContractDuration;
+use Trademe\Enums\District;
 use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
@@ -9,7 +10,7 @@ use Trademe\Exceptions\InvalidArgumentException;
 /**
  * Listing entity
  */
-class Listing implements EntityInterface
+class Listing extends Entity
 {
     /**
      * @var int
@@ -19,7 +20,7 @@ class Listing implements EntityInterface
     /**
      * @var int
      */
-    protected $duration;
+    protected $duration = 30;
 
     /**
      * @var string
@@ -37,7 +38,7 @@ class Listing implements EntityInterface
     protected $description;
 
     /**
-     * @var int
+     * @var District
      */
     protected $jobDistrict;
 
@@ -142,12 +143,12 @@ class Listing implements EntityInterface
     protected $brandingLogo;
 
     /**
+     * @param int $id
      * @param int $category
      * @param string $title
      * @param string $shortDescription
      * @param string $description
-     * @param int $duration
-     * @param int $jobDistrict
+     * @param District $jobDistrict
      * @param JobType $jobType
      * @param PayType $payType
      * @param PreferredApplicationMode $preferredApplicationMode
@@ -155,22 +156,22 @@ class Listing implements EntityInterface
      * @throws InvalidArgumentException
      */
     public function __construct(
+        $id = null,
         $category,
         $title,
         $shortDescription,
         $description,
-        $duration,
-        $jobDistrict,
+        District $jobDistrict,
         JobType $jobType,
         PayType $payType,
         PreferredApplicationMode $preferredApplicationMode,
         $contactName
     ) {
+        parent::__construct($id);
         $this->setCategory($category);
         $this->setTitle($title);
         $this->setShortDescription($shortDescription);
         $this->setDescription($description);
-        $this->setDuration($duration);
         $this->setJobDistrict($jobDistrict);
         $this->setJobType($jobType);
         $this->setPayType($payType);
@@ -198,28 +199,6 @@ class Listing implements EntityInterface
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * @param int $duration
-     * @throws InvalidArgumentException
-     */
-    public function setDuration($duration)
-    {
-        if (!is_int($duration) || $duration < 1 || $duration > 31) {
-            throw new InvalidArgumentException(
-                'Duration must be an integer between 1 and 31'
-            );
-        }
-        $this->duration = $duration;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDuration()
-    {
-        return $this->duration;
     }
 
     /**
@@ -307,16 +286,10 @@ class Listing implements EntityInterface
     }
 
     /**
-     * @param int $jobDistrict
-     * @throws InvalidArgumentException
+     * @param District $jobDistrict
      */
-    public function setJobDistrict($jobDistrict)
+    public function setJobDistrict(District $jobDistrict)
     {
-        if (!is_int($jobDistrict) || $jobDistrict < 0) {
-            throw new InvalidArgumentException(
-                'Job district must be an unsigned integer'
-            );
-        }
         $this->jobDistrict = $jobDistrict;
     }
 
@@ -769,6 +742,6 @@ class Listing implements EntityInterface
      */
     public function getArray()
     {
-       return [];
+        return [];
     }
 }

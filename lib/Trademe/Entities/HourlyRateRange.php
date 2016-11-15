@@ -13,9 +13,9 @@ class HourlyRateRange extends Range
      */
     public function __construct($min, $max)
     {
-        if ($max - $min > 400) {
+        if ($max - $min > 25) {
             throw new InvalidArgumentException(
-                'Max hourly rate range cannot exceed minimum amount by more than 400'
+                'Max hourly rate range cannot exceed minimum amount by more than 25'
             );
         }
 

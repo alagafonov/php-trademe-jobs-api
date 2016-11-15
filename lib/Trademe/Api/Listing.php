@@ -5,9 +5,9 @@
  */
 class Listing extends ApiAbstract
 {
-    public function get($listingId)
+    public function getOne($listingId)
     {
-        return $this->get('/Listings/' . $listingId . '.json');
+        return $this->get('/Selling/Listings/' . $listingId . '.json');
     }
 
     public function validate(array $data)

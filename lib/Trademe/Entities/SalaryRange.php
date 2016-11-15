@@ -13,9 +13,9 @@ class SalaryRange extends Range
      */
     public function __construct($min, $max)
     {
-        if ($max - $min > 20000) {
+        if ($max - $min > 10000) {
             throw new InvalidArgumentException(
-                'Max salary range cannot exceed minimum amount by more than 20000'
+                'Max salary range cannot exceed minimum amount by more than 10000'
             );
         }
 
