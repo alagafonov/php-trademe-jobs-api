@@ -6,8 +6,9 @@ use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
 use Trademe\Exceptions\InvalidArgumentException;
-use Trademe\ValueObjects\SalaryRange;
 use Trademe\ValueObjects\HourlyRateRange;
+use Trademe\ValueObjects\Phone;
+use Trademe\ValueObjects\SalaryRange;
 
 /**
  * Listing entity
@@ -396,7 +397,7 @@ class Listing extends Entity
     /**
      * @param HourlyRateRange $hourlyRateRange
      */
-    public function setHourlyRateRange(HourlyRateRange $hourlyRateRange)
+    public function setHourlyRateRange(HourlyRateRange $hourlyRateRange = null)
     {
         $this->hourlyRateRange = $hourlyRateRange;
     }
@@ -416,15 +417,11 @@ class Listing extends Entity
     public function setEmailAddress($emailAddress)
     {
         if ($emailAddress !== null && !filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException(
-                'Email address format is invalid'
-            );
+            throw new InvalidArgumentException('Email address format is invalid');
         }
 
         if (strlen($emailAddress) > 50) {
-            throw new InvalidArgumentException(
-                'Email address must be no more than 50 characters long'
-            );
+            throw new InvalidArgumentException('Email address must be no more than 50 characters long');
         }
 
         $this->emailAddress = $emailAddress;
@@ -445,15 +442,11 @@ class Listing extends Entity
     public function setApplicationUrl($applicationUrl)
     {
         if ($applicationUrl !== null && !filter_var($applicationUrl, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException(
-                'Application URL format is invalid'
-            );
+            throw new InvalidArgumentException('Application URL format is invalid');
         }
 
-        if (strlen($applicationUrl) > 50) {
-            throw new InvalidArgumentException(
-                'Email address must be no more than 50 characters long'
-            );
+        if (strlen($applicationUrl) > 250) {
+            throw new InvalidArgumentException('Application URL must be no more than 250 characters long');
         }
 
         $this->applicationUrl = $applicationUrl;
@@ -474,15 +467,11 @@ class Listing extends Entity
     public function setCompany($company)
     {
         if ($company !== null && !is_string($company)) {
-            throw new InvalidArgumentException(
-                'Company must be a string'
-            );
+            throw new InvalidArgumentException('Company must be a string');
         }
 
         if (strlen($company) > 50) {
-            throw new InvalidArgumentException(
-                'Company must be no more than 50 characters long'
-            );
+            throw new InvalidArgumentException('Company must be no more than 50 characters long');
         }
         $this->company = $company;
     }
@@ -502,15 +491,11 @@ class Listing extends Entity
     public function setPayAndBenefits($payAndBenefits)
     {
         if ($payAndBenefits !== null && !is_string($payAndBenefits)) {
-            throw new InvalidArgumentException(
-                'Pay and benefits must be a string'
-            );
+            throw new InvalidArgumentException('Pay and benefits must be a string');
         }
 
         if (strlen($payAndBenefits) > 50) {
-            throw new InvalidArgumentException(
-                'Pay and benefits must be no more than 50 characters long'
-            );
+            throw new InvalidArgumentException('Pay and benefits must be no more than 50 characters long');
         }
         $this->payAndBenefits = $payAndBenefits;
     }
@@ -530,15 +515,11 @@ class Listing extends Entity
     public function setApplicationInstructions($applicationInstructions)
     {
         if ($applicationInstructions !== null && !is_string($applicationInstructions)) {
-            throw new InvalidArgumentException(
-                'Pay and benefits must be a string'
-            );
+            throw new InvalidArgumentException('Application instructions must be a string');
         }
 
         if (strlen($applicationInstructions) > 500) {
-            throw new InvalidArgumentException(
-                'Pay and benefits must be no more than 500 characters long'
-            );
+            throw new InvalidArgumentException('Application instructions must be no more than 500 characters long');
         }
         $this->applicationInstructions = $applicationInstructions;
     }
@@ -558,15 +539,11 @@ class Listing extends Entity
     public function setExternalReferenceId($externalReferenceId)
     {
         if ($externalReferenceId !== null && !is_string($externalReferenceId)) {
-            throw new InvalidArgumentException(
-                'External reference id must be a string'
-            );
+            throw new InvalidArgumentException('External reference id must be a string');
         }
 
         if (strlen($externalReferenceId) > 50) {
-            throw new InvalidArgumentException(
-                'External reference id must be no more than 50 characters long'
-            );
+            throw new InvalidArgumentException('External reference id must be no more than 50 characters long');
         }
         $this->externalReferenceId = $externalReferenceId;
     }
@@ -586,9 +563,7 @@ class Listing extends Entity
     public function setYouTubeVideoKey($youTubeVideoKey)
     {
         if ($youTubeVideoKey !== null && !preg_match('/^[a-zA-Z0-9_-]{11}$/', $youTubeVideoKey)) {
-            throw new InvalidArgumentException(
-                'YouTube video key format is invalid'
-            );
+            throw new InvalidArgumentException('YouTube video key format is invalid');
         }
         $this->youTubeVideoKey = $youTubeVideoKey;
     }
@@ -604,7 +579,7 @@ class Listing extends Entity
     /**
      * @param ContractDuration $contractDuration
      */
-    public function setContractDuration(ContractDuration $contractDuration)
+    public function setContractDuration(ContractDuration $contractDuration = null)
     {
         $this->contractDuration = $contractDuration;
     }
@@ -624,9 +599,7 @@ class Listing extends Entity
     public function setGeneralManagement($generalManagement)
     {
         if ($generalManagement !== null && !is_bool($generalManagement)) {
-            throw new InvalidArgumentException(
-                'General management must be a boolean value'
-            );
+            throw new InvalidArgumentException('General management must be a boolean value');
         }
         $this->generalManagement = $generalManagement;
     }
@@ -646,9 +619,7 @@ class Listing extends Entity
     public function setWorkPermitRequired($workPermitRequired)
     {
         if ($workPermitRequired !== null && !is_bool($workPermitRequired)) {
-            throw new InvalidArgumentException(
-                'Work permit required must be a boolean value'
-            );
+            throw new InvalidArgumentException('Work permit required must be a boolean value');
         }
         $this->workPermitRequired = $workPermitRequired;
     }
@@ -664,7 +635,7 @@ class Listing extends Entity
     /**
      * @param Phone $phone
      */
-    public function setPhone1(Phone $phone)
+    public function setPhone1(Phone $phone = null)
     {
         $this->phone1 = $phone;
     }
@@ -680,7 +651,7 @@ class Listing extends Entity
     /**
      * @param Phone $phone
      */
-    public function setPhone2(Phone $phone)
+    public function setPhone2(Phone $phone = null)
     {
         $this->phone2 = $phone;
     }
@@ -700,9 +671,7 @@ class Listing extends Entity
     public function addPhoto($photoId)
     {
         if (!is_int($photoId)) {
-            throw new InvalidArgumentException(
-                'Photo id must be an integer value'
-            );
+            throw new InvalidArgumentException('Photo id must be an integer value');
         }
         $this->photos[$photoId] = true;
     }

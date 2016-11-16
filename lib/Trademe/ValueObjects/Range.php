@@ -5,7 +5,7 @@ use Trademe\Exceptions\InvalidArgumentException;
 /**
  * Abstract class range
  */
-abstract class Range extends AbstractValueObject
+abstract class Range implements ValueObjectInterface
 {
     /**
      * @var int

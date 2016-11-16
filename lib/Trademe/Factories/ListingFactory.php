@@ -1,13 +1,13 @@
 <?php namespace Trademe\Factories;
 
-use Trademe\Entities\HourlyRateRange;
 use Trademe\Entities\Listing;
-use Trademe\Entities\Phone;
-use Trademe\Entities\SalaryRange;
 use Trademe\Enums\District;
 use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
+use Trademe\ValueObjects\HourlyRateRange;
+use Trademe\ValueObjects\Phone;
+use Trademe\ValueObjects\SalaryRange;
 
 /**
  * Listing factory
@@ -29,7 +29,7 @@ class ListingFactory extends AbstractEntityFactory
         ],
         'ContractDuration'        => [
             'function' => 'setContractDuration',
-            'type'    => 'ContractDuration',
+            'type'     => 'ContractDuration',
         ],
         'ApplicationUrl'          => [
             'function' => 'setApplicationUrl',

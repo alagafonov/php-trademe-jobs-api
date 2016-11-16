@@ -3,7 +3,7 @@
 /**
  * Phone value object
  */
-class Phone extends AbstractValueObject
+final class Phone implements ValueObjectInterface
 {
     /**
      * @var string

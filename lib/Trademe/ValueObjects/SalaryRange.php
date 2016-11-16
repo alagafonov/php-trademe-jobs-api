@@ -5,7 +5,7 @@ use Trademe\Exceptions\InvalidArgumentException;
 /**
  * Salary range value object
  */
-class SalaryRange extends Range
+final class SalaryRange extends Range
 {
 
     /**

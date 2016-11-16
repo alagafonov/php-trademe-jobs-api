@@ -3,7 +3,7 @@
 /**
  * Value object interface
  */
-abstract class AbstractValueObject
+interface ValueObjectInterface
 {
-    abstract public function getArray();
+    public function getArray();
 }

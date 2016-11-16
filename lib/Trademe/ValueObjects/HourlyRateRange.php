@@ -3,7 +3,7 @@
 /**
  * Hourly rate range value object
  */
-class HourlyRateRange extends Range
+final class HourlyRateRange extends Range
 {
 
     /**
