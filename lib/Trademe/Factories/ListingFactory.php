@@ -57,7 +57,6 @@ class ListingFactory extends AbstractEntityFactory
      */
     public static function createListingFromArray(array $data)
     {
-        $data = self::transformArray($data);
         $listing = new Listing(
             $data['ListingId'],
             self::getCategory($data['Category']),
@@ -100,7 +99,7 @@ class ListingFactory extends AbstractEntityFactory
      * @param array $data
      * @return array
      */
-    private static function transformArray(array $data)
+    public static function transformArray(array $data)
     {
         $result = [];
         foreach ($data as $fieldName => $fieldValue) {
@@ -112,7 +111,7 @@ class ListingFactory extends AbstractEntityFactory
             } elseif ($fieldName == 'Attributes') {
                 if (!empty($fieldValue)) {
                     foreach ($fieldValue as $attribute) {
-                        $result[$attribute['Name']] = $fieldValue;
+                        $result[$attribute['Name']] = $attribute['Value'];
                     }
                 }
             }
