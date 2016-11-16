@@ -1,4 +1,4 @@
-<?php namespace Trademe\Entities;
+<?php namespace Trademe\ValueObjects;
 
 /**
  * Hourly rate range value object
@@ -20,5 +20,14 @@ class HourlyRateRange extends Range
         }
 
         parent::__construct($min, $max);
+    }
+
+    /**
+     * @return array
+     */
+    public function getArray()
+    {
+        return [
+        ];
     }
 }

@@ -1,9 +1,11 @@
-<?php namespace Trademe\Entities;
+<?php namespace Trademe\ValueObjects;
+
+use Trademe\Exceptions\InvalidArgumentException;
 
 /**
  * Abstract class range
  */
-abstract class Range
+abstract class Range extends AbstractValueObject
 {
     /**
      * @var int

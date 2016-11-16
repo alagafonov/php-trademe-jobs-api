@@ -6,6 +6,8 @@ use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
 use Trademe\Exceptions\InvalidArgumentException;
+use Trademe\ValueObjects\SalaryRange;
+use Trademe\ValueObjects\HourlyRateRange;
 
 /**
  * Listing entity
@@ -185,10 +187,8 @@ class Listing extends Entity
      */
     public function setCategory($category)
     {
-        if (!is_int($category) || $category < 0) {
-            throw new InvalidArgumentException(
-                'Category must be an unsigned integer'
-            );
+        if (!is_int($category) || $category < 1) {
+            throw new InvalidArgumentException('Category must be an integer and be greater than 0');
         }
         $this->category = $category;
     }
@@ -208,15 +208,15 @@ class Listing extends Entity
     public function setTitle($title)
     {
         if (!is_string($title)) {
-            throw new InvalidArgumentException(
-                'Title must be a string'
-            );
+            throw new InvalidArgumentException('Title must be a string');
+        }
+
+        if (!$title) {
+            throw new InvalidArgumentException('Title cannot be empty');
         }
 
         if (strlen($title) > 50) {
-            throw new InvalidArgumentException(
-                'Title must be no more than 50 characters long'
-            );
+            throw new InvalidArgumentException('Title must be no more than 50 characters long');
         }
         $this->title = $title;
     }
@@ -236,15 +236,15 @@ class Listing extends Entity
     public function setShortDescription($shortDescription)
     {
         if (!is_string($shortDescription)) {
-            throw new InvalidArgumentException(
-                'Short description must be a string'
-            );
+            throw new InvalidArgumentException('Short description must be a string');
+        }
+
+        if (!$shortDescription) {
+            throw new InvalidArgumentException('Short description cannot be empty');
         }
 
         if (strlen($shortDescription) > 150) {
-            throw new InvalidArgumentException(
-                'Short description must be no more than 150 characters long'
-            );
+            throw new InvalidArgumentException('Short description must be no more than 150 characters long');
         }
         $this->shortDescription = $shortDescription;
     }
@@ -264,15 +264,15 @@ class Listing extends Entity
     public function setDescription($description)
     {
         if (!is_string($description)) {
-            throw new InvalidArgumentException(
-                'Description must be a string'
-            );
+            throw new InvalidArgumentException('Description must be a string');
+        }
+
+        if (!$description) {
+            throw new InvalidArgumentException('Description cannot be empty');
         }
 
         if (strlen($description) > 2048) {
-            throw new InvalidArgumentException(
-                'Description must be no more than 2048 characters long'
-            );
+            throw new InvalidArgumentException('Description must be no more than 2048 characters long');
         }
         $this->description = $description;
     }
@@ -334,34 +334,6 @@ class Listing extends Entity
     }
 
     /**
-     * @param string $contactName
-     * @throws InvalidArgumentException
-     */
-    public function setContactName($contactName)
-    {
-        if (!is_string($contactName)) {
-            throw new InvalidArgumentException(
-                'Contact name must be a string'
-            );
-        }
-
-        if (strlen($contactName) > 50) {
-            throw new InvalidArgumentException(
-                'Contact name must be no more than 50 characters long'
-            );
-        }
-        $this->contactName = $contactName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContactName()
-    {
-        return $this->contactName;
-    }
-
-    /**
      * @param PreferredApplicationMode $preferredApplicationMode
      */
     public function setPreferredApplicationMode(PreferredApplicationMode $preferredApplicationMode)
@@ -378,9 +350,37 @@ class Listing extends Entity
     }
 
     /**
+     * @param string $contactName
+     * @throws InvalidArgumentException
+     */
+    public function setContactName($contactName)
+    {
+        if (!is_string($contactName)) {
+            throw new InvalidArgumentException('Contact name must be a string');
+        }
+
+        if (!$contactName) {
+            throw new InvalidArgumentException('Contact name cannot be empty');
+        }
+
+        if (strlen($contactName) > 50) {
+            throw new InvalidArgumentException('Contact name must be no more than 50 characters long');
+        }
+        $this->contactName = $contactName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactName()
+    {
+        return $this->contactName;
+    }
+
+    /**
      * @param SalaryRange $salaryRange
      */
-    public function setSalaryRange(SalaryRange $salaryRange)
+    public function setSalaryRange(SalaryRange $salaryRange = null)
     {
         $this->salaryRange = $salaryRange;
     }

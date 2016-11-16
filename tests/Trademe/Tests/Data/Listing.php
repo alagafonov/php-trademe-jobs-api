@@ -42,7 +42,7 @@ class Listing
                 ],
                 [
                     'Name'  => 'ContactName',
-                    'Value' => 'Joe Smithqwe',
+                    'Value' => 'Joe Smith',
                 ],
                 [
                     'Name'  => 'ApproximatePay',
@@ -50,7 +50,7 @@ class Listing
                 ],
                 [
                     'Name'  => 'ApproximatePayRangeHigh',
-                    'Value' => 30000,
+                    'Value' => 20000,
                 ],
                 [
                     'Name'  => 'HourlyRateRangeLower',
@@ -58,7 +58,7 @@ class Listing
                 ],
                 [
                     'Name'  => 'HourlyRateRangeUpper',
-                    'Value' => 400,
+                    'Value' => 25,
                 ],
                 [
                     'Name'  => 'EmailAddress',

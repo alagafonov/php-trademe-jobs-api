@@ -1,6 +1,8 @@
 <?php namespace Trademe\Tests\Entities;
 
 use Trademe\Entities\Listing;
+use Trademe\Entities\SalaryRange;
+use Trademe\Entities\HourlyRateRange;
 use Trademe\Enums\District;
 use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
@@ -13,7 +15,7 @@ class ListingTest extends TrademeTestCase
 {
     /**
      * @expectedException \Trademe\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Category must be an unsigned integer
+     * @expectedExceptionMessage Category must be an integer and be greater than 0
      */
     public function testInvalidCategory()
     {
@@ -24,12 +26,12 @@ class ListingTest extends TrademeTestCase
 
     /**
      * @expectedException \Trademe\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Category must be an unsigned integer
+     * @expectedExceptionMessage Category must be an integer and be greater than 0
      */
     public function testInvalidCategory2()
     {
         $data = ListingFactory::transformArray(ListingData::$data);
-        $data['Category'] = -10;
+        $data['Category'] = 0;
         $this->createListing($data);
     }
 
@@ -62,11 +64,22 @@ class ListingTest extends TrademeTestCase
         $this->createListing($data);
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Title cannot be empty
+     */
+    public function testInvalidTitle3()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['Title'] = '';
+        $this->createListing($data);
+    }
+
     public function testValidTitle()
     {
         $data = ListingFactory::transformArray(ListingData::$data);
         $listing = $this->createListing($data);
-        $this->assertEquals('Job Title', $listing->getTitle());
+        $this->assertEquals($data['Title'], $listing->getTitle());
     }
 
     /**
@@ -91,14 +104,22 @@ class ListingTest extends TrademeTestCase
         $this->createListing($data);
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Short description cannot be empty
+     */
+    public function testInvalidShortDescription3()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['ShortDescription'] = '';
+        $this->createListing($data);
+    }
+
     public function testValidShortDescription()
     {
         $data = ListingFactory::transformArray(ListingData::$data);
         $listing = $this->createListing($data);
-        $this->assertEquals(
-            'Job listing short description',
-            $listing->getShortDescription()
-        );
+        $this->assertEquals($data['ShortDescription'], $listing->getShortDescription());
     }
 
     /**
@@ -123,14 +144,22 @@ class ListingTest extends TrademeTestCase
         $this->createListing($data);
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Description cannot be empty
+     */
+    public function testInvalidDescription3()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['Description'] = '';
+        $this->createListing($data);
+    }
+
     public function testValidDescription()
     {
         $data = ListingFactory::transformArray(ListingData::$data);
         $listing = $this->createListing($data);
-        $this->assertEquals(
-            'Description of listing',
-            $listing->getDescription()
-        );
+        $this->assertEquals($data['Description'], $listing->getDescription());
     }
 
     public function testValidJobDistrict()
@@ -138,11 +167,92 @@ class ListingTest extends TrademeTestCase
         $data = ListingFactory::transformArray(ListingData::$data);
         $listing = $this->createListing($data);
         $district = $listing->getJobDistrict();
-        $this->assertInternalType('Trademe/Enums/District', $district);
-        /*$this->assertEquals(
-            'Description of listing',
+        $this->assertInstanceOf('\Trademe\Enums\District', $district);
+        $this->assertEquals($data['JobDistrict'], $district->getValue());
+    }
 
-        );*/
+    public function testValidJobType()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $jobType = $listing->getJobType();
+        $this->assertInstanceOf('\Trademe\Enums\JobType', $jobType);
+        $this->assertEquals($data['JobType'], $jobType->getValue());
+    }
+
+    public function testValidPreferredApplicationMode()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $preferredApplicationMode = $listing->getPreferredApplicationMode();
+        $this->assertInstanceOf('\Trademe\Enums\PreferredApplicationMode', $preferredApplicationMode);
+        $this->assertEquals($data['PreferredApplicationMode'], $preferredApplicationMode->getValue());
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Contact name must be a string
+     */
+    public function testInvalidContactName()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['ContactName'] = 324;
+        $this->createListing($data);
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Contact name must be no more than 50 characters long
+     */
+    public function testInvalidContactName2()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['ContactName'] = 'This contact name is longer than 50 characters. This contact name is longer than...';
+        $this->createListing($data);
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Contact name cannot be empty
+     */
+    public function testInvalidContactName3()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $data['ContactName'] = '';
+        $this->createListing($data);
+    }
+
+    public function testValidContactName()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $this->assertEquals($data['ContactName'], $listing->getContactName());
+    }
+
+    public function testValidSalaryRange()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $salaryRange = new SalaryRange($data['ApproximatePay'], $data['ApproximatePayRangeHigh']);
+
+        $listing->setSalaryRange($salaryRange);
+        $this->assertEquals($salaryRange, $listing->getSalaryRange());
+
+        $listing->setSalaryRange(null);
+        $this->assertNull($listing->getSalaryRange());
+    }
+
+    public function testValidHourlyRateRange()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $hourlyRateRange = new HourlyRateRange($data['HourlyRateRangeLower'], $data['HourlyRateRangeUpper']);
+
+        $listing->setHourlyRateRange($hourlyRateRange);
+        $this->assertEquals($hourlyRateRange, $listing->getHourlyRateRange());
+
+        $listing->setHourlyRateRange(null);
+        $this->assertNull($listing->getHourlyRateRange());
     }
 
     private function createListing($data)

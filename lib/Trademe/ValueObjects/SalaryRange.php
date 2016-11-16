@@ -1,4 +1,6 @@
-<?php namespace Trademe\Entities;
+<?php namespace Trademe\ValueObjects;
+
+use Trademe\Exceptions\InvalidArgumentException;
 
 /**
  * Salary range value object
@@ -20,5 +22,14 @@ class SalaryRange extends Range
         }
 
         parent::__construct($min, $max);
+    }
+
+    /**
+     * @return array
+     */
+    public function getArray()
+    {
+        return [
+        ];
     }
 }

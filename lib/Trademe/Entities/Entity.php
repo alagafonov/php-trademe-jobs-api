@@ -5,7 +5,7 @@ use Trademe\Exceptions\InvalidArgumentException;
 /**
  * Entity abstract class
  */
-abstract class Entity implements EntityInterface
+abstract class Entity
 {
     /**
      * @var int

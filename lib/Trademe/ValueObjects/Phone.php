@@ -1,9 +1,9 @@
-<?php namespace Trademe\Entities;
+<?php namespace Trademe\ValueObjects;
 
 /**
  * Phone value object
  */
-class Phone
+class Phone extends AbstractValueObject
 {
     /**
      * @var string
@@ -92,5 +92,14 @@ class Phone
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArray()
+    {
+        return [
+        ];
     }
 }
