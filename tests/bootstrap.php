@@ -15,6 +15,6 @@ if ((!$loader = includeIfExists(__DIR__ . '/../vendor/autoload.php')) &&
         'php composer.phar install' . PHP_EOL);
 }
 
-$loader->add('Trademe\Tests', __DIR__);
+$loader->add('Trademe\\Tests\\', __DIR__);
 
 return $loader;
