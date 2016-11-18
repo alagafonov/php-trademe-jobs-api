@@ -28,7 +28,7 @@ class ListingTest extends TrademeTestCase
 
     /**
      * @expectedException \Trademe\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Category must be an integer and be greater than 011
+     * @expectedExceptionMessage Category must be an integer and be greater than 0
      */
     public function testInvalidCategory2()
     {
