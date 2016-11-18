@@ -3,7 +3,7 @@
 class Listing
 {
     public static $data = [
-        'ListingId'            => '5030919',
+        'ListingId'            => 5041494,
         'Category'             => 5073,
         'Title'                => 'Job Title',
         'ShortDescription'     => 'Job listing short description',
@@ -78,7 +78,7 @@ class Listing
                 ],
                 [
                     'Name'  => 'Phone2Prefix',
-                    'Value' => 61,
+                    'Value' => '61',
                 ],
                 [
                     'Name'  => 'Phone2Number',

@@ -96,10 +96,10 @@ class Listing extends ApiAbstract
     public function withdraw($listingId, $positionFilled)
     {
         if ($positionFilled) {
-            $type = 'ListingWasSold';
+            $type = 1;
             $reason = 'Position filled';
         } else {
-            $type = 'ListingWasNotSold';
+            $type = 2;
             $reason = 'Position was not filled';
         }
 

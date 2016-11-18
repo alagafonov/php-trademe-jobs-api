@@ -6,6 +6,7 @@ use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
 use Trademe\Exceptions\InvalidArgumentException;
+use Trademe\Exceptions\EntityValidationException;
 use Trademe\ValueObjects\HourlyRateRange;
 use Trademe\ValueObjects\Phone;
 use Trademe\ValueObjects\SalaryRange;
@@ -749,6 +750,38 @@ class Listing extends Entity
     public function getBrandingLogo()
     {
         return $this->brandingLogo;
+    }
+
+    /**
+     * @throws EntityValidationException
+     */
+    public function prevalidate()
+    {
+        $preferredApplicationMode = $this->getPreferredApplicationMode()->getValue();
+        if ($preferredApplicationMode == PreferredApplicationMode::EMAIL) {
+            if ($this->getEmailAddress() === null) {
+                throw new EntityValidationException('Email address cannot be empty with current application mode');
+            }
+        } elseif ($preferredApplicationMode == PreferredApplicationMode::PHONE) {
+            if ($this->getPhone1() === null) {
+                throw new EntityValidationException('Phone 1 cannot be empty with current application mode');
+            }
+        } else {
+            if ($this->getApplicationUrl() === null) {
+                throw new EntityValidationException('Application url cannot be empty with current application mode');
+            }
+        }
+
+        $payType = $this->getPayType()->getValue();
+        if ($payType == PayType::SALARY) {
+            if ($this->getSalaryRange() === null) {
+                throw new EntityValidationException('Salary range cannot be empty when pay type is set to salary');
+            }
+        } else {
+            if ($this->getHourlyRateRange() === null) {
+                throw new EntityValidationException('Hourly rate range cannot be empty when pay type is set to hourly');
+            }
+        }
     }
 
     /**

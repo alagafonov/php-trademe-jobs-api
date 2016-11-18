@@ -652,6 +652,70 @@ class ListingTest extends TrademeTestCase
         $this->assertEquals(null, $listing->getBrandingLogo());
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\EntityValidationException
+     * @expectedExceptionMessage Email address cannot be empty with current application mode
+     */
+    public function testPrevalidateMissingEmail()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setPreferredApplicationMode(PreferredApplicationMode::EMAIL());
+        $listing->prevalidate();
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\EntityValidationException
+     * @expectedExceptionMessage Phone 1 cannot be empty with current application mode
+     */
+    public function testPrevalidateMissingPhone()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setPreferredApplicationMode(PreferredApplicationMode::PHONE());
+        $listing->prevalidate();
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\EntityValidationException
+     * @expectedExceptionMessage Application url cannot be empty with current application mode
+     */
+    public function testPrevalidateMissingWebsite()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setPreferredApplicationMode(PreferredApplicationMode::WEBSITE());
+        $listing->prevalidate();
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\EntityValidationException
+     * @expectedExceptionMessage Salary range cannot be empty when pay type is set to salary
+     */
+    public function testPrevalidateMissingSalaryRange()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setPreferredApplicationMode(PreferredApplicationMode::EMAIL());
+        $listing->setEmailAddress('test@test.com');
+        $listing->setPayType(PayType::SALARY());
+        $listing->prevalidate();
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\EntityValidationException
+     * @expectedExceptionMessage Hourly rate range cannot be empty when pay type is set to hourly
+     */
+    public function testPrevalidateMissingHourlyRateRange()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setPreferredApplicationMode(PreferredApplicationMode::EMAIL());
+        $listing->setEmailAddress('test@test.com');
+        $listing->setPayType(PayType::HOURLY());
+        $listing->prevalidate();
+    }
+
     private function createListing($data)
     {
         return new Listing(
