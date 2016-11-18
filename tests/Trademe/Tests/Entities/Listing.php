@@ -586,6 +586,72 @@ class ListingTest extends TrademeTestCase
         $this->assertSame([3, 7, 5], $listing->getPhotos());
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Branding banner must be an integer and be greater than 0
+     */
+    public function testInvalidBrandingBanner()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingBanner('a');
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Branding banner must be an integer and be greater than 0
+     */
+    public function testInvalidBrandingBanner2()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingBanner(0);
+    }
+
+    public function testValidBrandingBanner()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingBanner($data['BrandingBanner']);
+        $this->assertEquals($data['BrandingBanner'], $listing->getBrandingBanner());
+
+        $listing->setBrandingBanner(null);
+        $this->assertEquals(null, $listing->getBrandingBanner());
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Branding logo must be an integer and be greater than 0
+     */
+    public function testInvalidBrandingLogo()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingLogo('a');
+    }
+
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Branding logo must be an integer and be greater than 0
+     */
+    public function testInvalidBrandingLogo2()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingLogo(0);
+    }
+
+    public function testValidBrandingLogo()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+        $listing->setBrandingLogo($data['BrandingLogo']);
+        $this->assertEquals($data['BrandingLogo'], $listing->getBrandingLogo());
+
+        $listing->setBrandingLogo(null);
+        $this->assertEquals(null, $listing->getBrandingLogo());
+    }
+
     private function createListing($data)
     {
         return new Listing(

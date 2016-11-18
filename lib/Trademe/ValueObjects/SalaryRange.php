@@ -30,6 +30,14 @@ final class SalaryRange extends Range
     public function getArray()
     {
         return [
+            [
+                'Name'  => 'ApproximatePay',
+                'Value' => $this->getMin(),
+            ],
+            [
+                'Name'  => 'ApproximatePayRangeHigh',
+                'Value' => $this->getMax(),
+            ],
         ];
     }
 }

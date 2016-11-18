@@ -1,5 +1,7 @@
 <?php namespace Trademe\ValueObjects;
 
+use Trademe\Exceptions\InvalidArgumentException;
+
 /**
  * Phone value object
  */
@@ -100,6 +102,14 @@ final class Phone implements ValueObjectInterface
     public function getArray()
     {
         return [
+            [
+                'Name'  => 'PhonePrefix',
+                'Value' => $this->getMin(),
+            ],
+            [
+                'Name'  => 'PhoneNumber',
+                'Value' => $this->getMax(),
+            ],
         ];
     }
 }

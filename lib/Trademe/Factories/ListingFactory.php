@@ -29,7 +29,7 @@ class ListingFactory extends AbstractEntityFactory
         ],
         'ContractDuration'        => [
             'function' => 'setContractDuration',
-            'type'     => 'ContractDuration',
+            'type'     => '\Trademe\Enums\ContractDuration',
         ],
         'ApplicationUrl'          => [
             'function' => 'setApplicationUrl',
@@ -59,16 +59,17 @@ class ListingFactory extends AbstractEntityFactory
     {
         $listing = new Listing(
             $data['ListingId'],
-            self::getCategory($data['Category']),
+            $data['Category'],
             $data['Title'],
             $data['ShortDescription'],
             $data['Description'],
             District::get($data['JobDistrict']),
             JobType::get($data['JobType']),
             PayType::get($data['PayType']),
-            PreferredApplicationMode::get($data['PreferredApplicationMode'])
+            PreferredApplicationMode::get($data['PreferredApplicationMode']),
+            $data['ContactName']
         );
-        parent::populateEntity($listing, $data, self::$mappings);
+        self::populateEntity($listing, $data, self::$mappings);
 
         if (isset($data['ApproximatePay']) && isset($data['ApproximatePayRangeHigh'])) {
             $listing->setSalaryRange(new SalaryRange($data['ApproximatePay'], $data['ApproximatePayRangeHigh']));
@@ -111,14 +112,25 @@ class ListingFactory extends AbstractEntityFactory
             } elseif ($fieldName == 'Attributes') {
                 if (!empty($fieldValue)) {
                     foreach ($fieldValue as $attribute) {
+                        // API returns all numbers as strings. Perform conversion.
+                        if ($attribute['Name'] == 'JobDistrict' || $attribute['Name'] == 'ApproximatePay' ||
+                            $attribute['Name'] == 'ApproximatePayRangeHigh' ||
+                            $attribute['Name'] == 'HourlyRateRangeLower' || $attribute['Name'] == 'HourlyRateRangeUpper'
+                        ) {
+                            $attribute['Value'] = (int)$attribute['Value'];
+                        }
                         $result[$attribute['Name']] = $attribute['Value'];
                     }
                 }
+            } elseif ($fieldName == 'Category') {
+                // API returns all numbers as strings. Perform conversion.
+                $fieldValue = (int)$fieldValue;
             }
 
             if ($fieldName != 'Attributes') {
                 $result[$fieldName] = $fieldValue;
             }
+
         }
         return $result;
     }

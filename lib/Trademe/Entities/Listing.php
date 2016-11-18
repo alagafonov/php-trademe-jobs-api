@@ -140,9 +140,14 @@ class Listing extends Entity
      */
     protected $photos = [];
 
-
-    protected $branding;
+    /**
+     * @var int
+     */
     protected $brandingBanner;
+
+    /**
+     * @var int
+     */
     protected $brandingLogo;
 
     /**
@@ -295,7 +300,7 @@ class Listing extends Entity
     }
 
     /**
-     * @return int
+     * @return District
      */
     public function getJobDistrict()
     {
@@ -707,10 +712,168 @@ class Listing extends Entity
     }
 
     /**
+     * @param int $brandingBanner
+     * @throws InvalidArgumentException
+     */
+    public function setBrandingBanner($brandingBanner)
+    {
+        if ($brandingBanner !== null && (!is_int($brandingBanner) || $brandingBanner < 1)) {
+            throw new InvalidArgumentException('Branding banner must be an integer and be greater than 0');
+        }
+        $this->brandingBanner = $brandingBanner;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBrandingBanner()
+    {
+        return $this->brandingBanner;
+    }
+
+    /**
+     * @param int $brandingLogo
+     * @throws InvalidArgumentException
+     */
+    public function setBrandingLogo($brandingLogo)
+    {
+        if ($brandingLogo !== null && (!is_int($brandingLogo) || $brandingLogo < 1)) {
+            throw new InvalidArgumentException('Branding logo must be an integer and be greater than 0');
+        }
+        $this->brandingLogo = $brandingLogo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBrandingLogo()
+    {
+        return $this->brandingLogo;
+    }
+
+    /**
      * @return array
      */
     public function getArray()
     {
-        return [];
+        $attributes = [
+            [
+                'Name'  => 'JobDistrict',
+                'Value' => $this->getJobDistrict()->getValue(),
+            ],
+            [
+                'Name'  => 'JobType',
+                'Value' => $this->getJobType()->getValue(),
+            ],
+            [
+                'Name'  => 'PayType',
+                'Value' => $this->getPayType()->getValue(),
+            ],
+            [
+                'Name'  => 'PreferredApplicationMode',
+                'Value' => $this->getPreferredApplicationMode()->getValue(),
+            ],
+            [
+                'Name'  => 'ContactName',
+                'Value' => $this->getContactName(),
+            ],
+            [
+                'Name'  => 'EmailAddress',
+                'Value' => $this->getEmailAddress(),
+            ],
+            [
+                'Name'  => 'ApplicationUrl',
+                'Value' => $this->getApplicationUrl(),
+            ],
+            [
+                'Name'  => 'Company',
+                'Value' => $this->getCompany(),
+            ],
+            [
+                'Name'  => 'PayAndBenefits',
+                'Value' => $this->getPayAndBenefits(),
+            ],
+            [
+                'Name'  => 'ApplicationInstructions',
+                'Value' => $this->getApplicationInstructions(),
+            ],
+            [
+                'Name'  => 'ContractDuration',
+                'Value' => 'PER',
+            ],
+        ];
+
+        $salaryRange = $this->getSalaryRange();
+        if ($salaryRange !== null) {
+            $attributes = array_merge($attributes, $salaryRange->getArray());
+        }
+
+        $hourlyRateRange = $this->getHourlyRateRange();
+        if ($hourlyRateRange !== null) {
+            $attributes = array_merge($attributes, $hourlyRateRange->getArray());
+        }
+
+        $phone1 = $this->getPhone1();
+        if ($phone1 !== null) {
+            $attributes[] = [
+                'Name'  => 'Phone1Prefix',
+                'Value' => $phone1->getPrefix(),
+            ];
+            $attributes[] = [
+                'Name'  => 'Phone1Number',
+                'Value' => $phone1->getPhone(),
+            ];
+        }
+
+        $phone2 = $this->getPhone2();
+        if ($phone2 !== null) {
+            $attributes[] = [
+                'Name'  => 'Phone2Prefix',
+                'Value' => $phone2->getPrefix(),
+            ];
+            $attributes[] = [
+                'Name'  => 'Phone2Number',
+                'Value' => $phone2->getPhone(),
+            ];
+        }
+
+        $brandingBanner = $this->getBrandingBanner();
+        $brandingLogo = $this->getBrandingLogo();
+        $isBranded = false;
+        if ($brandingBanner !== null || $brandingLogo !== null) {
+            $isBranded = true;
+            $attributes[] = [
+                'Name'  => 'Branding',
+                'Value' => true,
+            ];
+            $attributes[] = [
+                'Name'  => 'BrandingBanner',
+                'Value' => $brandingBanner,
+            ];
+            $attributes[] = [
+                'Name'  => 'BrandingLogo',
+                'Value' => $brandingLogo,
+            ];
+        }
+
+        return [
+            'ListingId'            => $this->getId(),
+            'Category'             => $this->getCategory(),
+            'Title'                => $this->getTitle(),
+            'ShortDescription'     => $this->getShortDescription(),
+            'Description'          => [
+                $this->getDescription(),
+            ],
+            'Duration'             => $this->duration,
+            'ExternalReferenceId'  => $this->getExternalReferenceId(),
+            'EmbeddedContent'      => [
+                'YouTubeVideoKey' => $this->getYouTubeVideoKey(),
+            ],
+            'IsBranded'            => $isBranded,
+            'IsClassified'         => true,
+            'ReturnListingDetails' => false,
+            'PhotoIds'             => $this->getPhotos(),
+            'Attributes'           => $attributes,
+        ];
     }
 }

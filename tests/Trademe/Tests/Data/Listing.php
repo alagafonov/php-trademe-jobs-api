@@ -100,7 +100,7 @@ class Listing
                     'Name'  => 'ContractDuration',
                     'Value' => 'PER',
                 ],
-                /*[
+                [
                     'Name'  => 'Branding',
                     'Value' => true,
                 ],
@@ -111,7 +111,7 @@ class Listing
                 [
                     'Name'  => 'BrandingLogo',
                     'Value' => 345679,
-                ],*/
+                ],
             ],
     ];
 }

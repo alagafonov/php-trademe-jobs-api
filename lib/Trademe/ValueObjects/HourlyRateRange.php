@@ -28,6 +28,14 @@ final class HourlyRateRange extends Range
     public function getArray()
     {
         return [
+            [
+                'Name'  => 'HourlyRateRangeLower',
+                'Value' => $this->getMin(),
+            ],
+            [
+                'Name'  => 'HourlyRateRangeUpper',
+                'Value' => $this->getMax(),
+            ],
         ];
     }
 }
