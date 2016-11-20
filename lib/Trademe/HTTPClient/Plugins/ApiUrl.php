@@ -5,6 +5,9 @@ use Psr\Http\Message\RequestInterface;
 
 class ApiUrl implements Plugin
 {
+    /**
+     * @var string
+     */
     private $url;
 
     /**
