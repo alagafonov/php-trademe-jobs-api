@@ -73,7 +73,6 @@ final class Phone implements ValueObjectInterface
             throw new InvalidArgumentException(
                 'Phone number must be between "' . $this->prefixes[$prefix][0] . '" and ' .
                 $this->prefixes[$prefix][1] . ' characters long'
-
             );
         }
         $this->prefix = $prefix;

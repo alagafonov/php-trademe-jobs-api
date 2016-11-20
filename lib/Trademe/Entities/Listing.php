@@ -165,7 +165,7 @@ class Listing extends Entity
      * @throws InvalidArgumentException
      */
     public function __construct(
-        $id = null,
+        $id,
         $category,
         $title,
         $shortDescription,
