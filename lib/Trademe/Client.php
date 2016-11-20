@@ -59,7 +59,7 @@ class Client
     {
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
-        $this->addPlugin(new ApiUrl($this->apiUrl));
+        //$this->addPlugin(new ApiUrl($this->apiUrl));
         $this->addPlugin(new ExceptionHandler());
     }
 

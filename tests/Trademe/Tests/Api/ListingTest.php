@@ -4,7 +4,7 @@ use Trademe\Api\Listing as ListingApi;
 use Trademe\Factories\ListingFactory;
 use Trademe\Tests\Data\Listing as ListingData;
 
-class Listing extends TestCase
+class ListingTest extends TestCase
 {
     public function testRetrieve()
     {
