@@ -130,7 +130,6 @@ class ListingFactory extends AbstractEntityFactory
             if ($fieldName != 'Attributes') {
                 $result[$fieldName] = $fieldValue;
             }
-
         }
         return $result;
     }
