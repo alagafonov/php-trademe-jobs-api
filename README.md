@@ -14,7 +14,9 @@ http://developer.trademe.co.nz/getting-started/
 
 ## Installation via Composer ##
 
+```bash
 composer require alagafonov/php-trademe-jobs-api:1.0.0-beta
+```
 
 ## Examples ##
 
