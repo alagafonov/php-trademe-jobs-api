@@ -35,4 +35,4 @@ Library is licensed under the MIT License - see the LICENSE file for details
 
 ## Sponsored by
 
-[<img src="http://www.subscribe-hr.com.au/hs-fs/hubfs/subscribe_hr_logo_tech.png" width="350">](http://www.subscribe-hr.com.au/)
+[<img src="http://www.subscribe-hr.com.au/hs-fs/hubfs/subscribe_hr_logo_tech.png" width="200">](http://www.subscribe-hr.com.au/)
