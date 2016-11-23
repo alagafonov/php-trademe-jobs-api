@@ -1,5 +1,7 @@
 <?php namespace Trademe\ValueObjects;
 
+use Trademe\Exceptions\InvalidArgumentException;
+
 /**
  * Hourly rate range value object
  */
