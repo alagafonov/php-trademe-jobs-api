@@ -137,12 +137,12 @@ class ListingTest extends TrademeTestCase
 
     /**
      * @expectedException \Trademe\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Description must be no more than 2048 characters long
+     * @expectedExceptionMessage Description must be no more than 5100 characters long
      */
     public function testInvalidDescription2()
     {
         $data = ListingFactory::transformArray(ListingData::$data);
-        $data['Description'] = str_repeat('B', 2049);
+        $data['Description'] = str_repeat('B', 5101);
         $this->createListing($data);
     }
 

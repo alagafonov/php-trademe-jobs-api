@@ -278,8 +278,8 @@ class Listing extends Entity
             throw new InvalidArgumentException('Description cannot be empty');
         }
 
-        if (strlen($description) > 2048) {
-            throw new InvalidArgumentException('Description must be no more than 2048 characters long');
+        if (strlen($description) > 5100) {
+            throw new InvalidArgumentException('Description must be no more than 5100 characters long');
         }
         $this->description = $description;
     }
