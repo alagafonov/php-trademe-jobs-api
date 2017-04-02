@@ -10,12 +10,12 @@ final class Phone implements ValueObjectInterface
     /**
      * @var string
      */
-    protected $prefix;
+    private $prefix;
 
     /**
      * @var string
      */
-    protected $phone;
+    private $phone;
 
     /**
      * @var array

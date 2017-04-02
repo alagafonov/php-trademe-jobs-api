@@ -716,6 +716,28 @@ class ListingTest extends TrademeTestCase
         $listing->prevalidate();
     }
 
+    /**
+     * @expectedException \Trademe\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Is featured must be a boolean value
+     */
+    public function testInvalidIsFeatured()
+    {
+        $listing = $this->createListing(ListingFactory::transformArray(ListingData::$data));
+        $listing->setIsFeatured([]);
+    }
+
+    public function testSetIsFeatured()
+    {
+        $data = ListingFactory::transformArray(ListingData::$data);
+        $listing = $this->createListing($data);
+
+        $listing->setIsFeatured(true);
+        $this->assertTrue($listing->getIsFeatured());
+
+        $listing->setIsFeatured(null);
+        $this->assertNull($listing->getIsFeatured());
+    }
+
     private function createListing($data)
     {
         return new Listing(

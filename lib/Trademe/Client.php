@@ -2,10 +2,12 @@
 
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\Plugin;
+use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\UriFactoryDiscovery;
 use Trademe\Api\EndPointInterface;
 use Trademe\HttpClient\Plugins\AddApiUrl;
 use Trademe\HttpClient\Plugins\Authentication;
@@ -59,7 +61,14 @@ class Client
     {
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
-        $this->addPlugin(new AddApiUrl($this->apiUrl));
+        //$this->addPlugin(new AddApiUrl($this->apiUrl));
+        $this->addPlugin(
+            new BaseUriPlugin(
+                UriFactoryDiscovery::find()->createUri($this->apiUrl), [
+                'replace' => true,
+            ]
+            )
+        );
         $this->addPlugin(new ExceptionHandler());
     }
 

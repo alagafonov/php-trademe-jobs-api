@@ -7,7 +7,6 @@ use Trademe\Exceptions\InvalidArgumentException;
  */
 final class SalaryRange extends Range
 {
-
     /**
      * @param $min
      * @param $max

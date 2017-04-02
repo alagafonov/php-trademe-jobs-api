@@ -49,6 +49,9 @@ class ListingFactory extends AbstractEntityFactory
         'PhotoIds'                => [
             'function' => 'setPhotos',
         ],
+        'IsFeatured'              => [
+            'function' => 'setIsFeatured',
+        ],
     ];
 
     /**

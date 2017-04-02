@@ -7,7 +7,6 @@ use Trademe\Exceptions\InvalidArgumentException;
  */
 final class HourlyRateRange extends Range
 {
-
     /**
      * @param $min
      * @param $max

@@ -5,8 +5,8 @@ use Trademe\Enums\District;
 use Trademe\Enums\JobType;
 use Trademe\Enums\PayType;
 use Trademe\Enums\PreferredApplicationMode;
-use Trademe\Exceptions\InvalidArgumentException;
 use Trademe\Exceptions\EntityValidationException;
+use Trademe\Exceptions\InvalidArgumentException;
 use Trademe\ValueObjects\HourlyRateRange;
 use Trademe\ValueObjects\Phone;
 use Trademe\ValueObjects\SalaryRange;
@@ -150,6 +150,11 @@ class Listing extends Entity
      * @var int
      */
     protected $brandingLogo;
+
+    /**
+     * @var bool
+     */
+    protected $isFeatured;
 
     /**
      * @param int $id
@@ -753,6 +758,26 @@ class Listing extends Entity
     }
 
     /**
+     * @param bool $isFeatured
+     * @throws InvalidArgumentException
+     */
+    public function setIsFeatured($isFeatured)
+    {
+        if ($isFeatured !== null && !is_bool($isFeatured)) {
+            throw new InvalidArgumentException('Is featured must be a boolean value');
+        }
+        $this->isFeatured = $isFeatured;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsFeatured()
+    {
+        return $this->isFeatured;
+    }
+
+    /**
      * @throws EntityValidationException
      */
     public function prevalidate()
@@ -903,6 +928,7 @@ class Listing extends Entity
                 'YouTubeVideoKey' => $this->getYouTubeVideoKey(),
             ],
             'IsBranded'            => $isBranded,
+            'IsFeatured'           => $this->getIsFeatured() ? true : false,
             'IsClassified'         => true,
             'ReturnListingDetails' => false,
             'PhotoIds'             => $this->getPhotos(),
